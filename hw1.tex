@@ -1,0 +1,119 @@
+\documentclass{ctexart}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{lemma}{引理}[section]
+\renewcommand{\proofname}{\textbf{证明}}
+\newcommand*{\tran}{^{\mkern-1.5mu\mathsf{T}}}
+
+\title{「实对称矩阵可在实数域上相似对角化」的叙述与证明}
+
+\author{洪艺中 \\ 数学与应用数学 3190105490}
+
+\begin{document}
+
+\maketitle
+
+% 4. 证明实对称矩必可在实数域上相似对角化；
+
+% 要求:
+% 1. 用 article 或 ctexart 模板完成；
+% 2. 用 Latex 产生标题, 作者和日期；
+% 3. 可以用中文或英文完成；
+% 4. 所有公式必须自动编号, 并且互相之间用自动编号交叉引用.
+% 5. 文章分两个 section, 分别是"问题描述" 和 "证明". 第一个 section 之前, 应该有一段导言, 描述问题的背景和意义. 
+% 6. 本次作业不要求一定有插图, 摘要和参考文献；
+% 7. 作业的提交形式推荐采用 git 的形式, 提交一个可以 clone 的 git 目录, 这样助教就能下载批阅. 或者, 可以提交一个包含所有内容的zip文件. 不论你以何种形式提交, 必须确保助教能得到你的tex文件, 并且能够正确地用xelatex编译.  
+% 8. 你可以使用附件中的模板, 请解压获得 tex 文件.
+
+由于实对称矩阵可以从二次型得到, 因此它是非常常见的矩阵. 证明实对称矩阵可对角化不仅给出了「矩阵能对角化」的一个必要条件, 也为将二次型化为标准形(对角形)给出了理论支撑. 在二次曲面、偏微分方程等领域皆有使用. \par
+\section{问题描述} % (fold)
+\label{sec:问题描述}
+元素全为实数的矩阵 $A := (a_{ij})_{n\times n}, a_{ij} \in \mathbb{R}$ 称为\textbf{实矩阵}, 如果它进一步满足 $\forall i, j \in \{1, 2, \cdots, n\}(a_{ij} = a_{ji})$, 那么它是一个\textbf{实对称矩阵}. \par
+本文将要证明实对称矩阵必可在实数域上相似对角化. 或者确切地说, 如果 $A \in \mathbb{R}^{n \times n}$ 是实对称矩阵, 一定存在 $n$ 阶正交矩阵 $U$ 使得 $UAU\tran$ 是对角阵(即, 非对角元均为$0$). \par
+% section 问题描述 (end)
+
+\section{证明} % (fold)
+\label{sec:证明}
+\begin{proof}
+设 $A$ 是一个 $n$ 阶实对称矩阵, 这里用归纳法证明存在 $n$ 阶的正交矩阵使得 $UAU\tran$ 是对角阵.\par
+若 $n = 1$, 结论显然, 取 $U = (1)$ 即可. \par
+下面假设 $k = n - 1$ 时结论成立. 首先证明\par
+\begin{lemma}
+\label{thm::lemma::lm1}
+$A$ 有 $n$ 个实特征值.
+\end{lemma}
+\begin{proof}
+	设 $\lambda$ 是 $A$ 在 $\mathbb{C}$ 的特征值(因为特征多项式一定有 $n$ 个根, 所以一定存在 $n$ 个复特征值), $\xi$ 是对应的特征向量, 那么有
+	\begin{equation}
+	\label{eq::lemma1::1}
+		\bar{\xi}\tran A\xi = \lambda\bar{\xi}\tran\xi = \lambda\left|\xi\right|^2
+	\end{equation}
+	和
+	\begin{equation}
+	\label{eq::lemma1::2}
+		\bar{\xi}\tran A\xi = (\bar{\xi}\tran \bar{A}\tran)\xi = \bar{\lambda}\bar{\xi}\tran\xi = \bar{\lambda}\left|\xi\right|^2
+	\end{equation}
+	比较 (\ref{eq::lemma1::1}) 和 (\ref{eq::lemma1::2}) 可见 $\lambda = \bar{\lambda}$. 因此 $\lambda \in \mathbb{R}$. 由取 $\lambda$ 时的任意性可知 $A$ 的所有特征值都是实数.
+\end{proof}\par
+根据引理\ref{thm::lemma::lm1}, $A$ 的特征值均为实数, 那么特征向量满足的方程组 $\left|\lambda I - A\right| = 0$ 是实系数的, 因此有实数解, 也就是说对每个实特征值存在对应的实特征向量. 取 $\lambda$ 为其任意的特征值, $\xi$ 是对应的实特征向量且 $\left|\xi\right| = 1$, 将 $\xi$ 扩充成 $\mathrm{R}^n$ 的一组标准正交基 $\xi, \xi_2, \cdots, \xi_n$, 则
+\begin{equation}
+\label{eq::3}
+	A(\xi \  \xi_2 \  \cdots \  \xi_n) = (\xi \  \xi_2 \  \cdots \  \xi_n)\left(\begin{matrix}
+	\lambda & \mathbf{\alpha} \\
+	\mathbf{0} & A^\prime
+	\end{matrix}\right)
+\end{equation}
+其中 $\mathbf{\alpha}$ 是 $n - 1$ 维的实行向量, $A^\prime$ 是 $n - 1$ 阶实矩阵. 设 $U_0 = (\xi \  \xi_2 \  \cdots \  \xi_n$, 则有 $U_0$ 是正交矩阵(标准正交基)并且(\ref{eq::3})等价于
+\begin{equation}
+\label{eq::equiv_3}
+	U_0\tran AU_0 = \left(\begin{matrix}
+	\lambda & \mathbf{\alpha} \\
+	\mathbf{0} & A^\prime
+	\end{matrix}\right)
+\end{equation} \par
+因为左边是实对称矩阵, 所以右边也是实对称矩阵, 即 $\mathbf{\alpha} = \mathbf{0}$, 并且 $A^\prime$ 也是实对称矩阵. 根据归纳假设, 存在正交矩阵 $U^\prime$ 满足 $(U^\prime)\tran A^\prime U^\prime = D^\prime$ 是对角阵. 构造\footnote{我觉得这个构造不需要自动编号, 因为这是一个定义式, 但是作业要求所有公式都要编号就加上了}
+\begin{equation}
+\label{eq::def_U}
+	U := U_0\left(\begin{matrix}
+	1 & \mathbf{0} \\
+	\mathbf{0} & U^\prime
+	\end{matrix}\right)
+\end{equation}
+显然 $U$ 是正交矩阵, 并且
+\begin{equation}
+\label{eq::result}
+\begin{aligned}
+	U\tran AU &= 
+	\left(
+	\begin{matrix}
+	1 & \\
+	  & (U^\prime)\tran
+	\end{matrix}
+	\right)
+	\left(
+	\begin{matrix}
+	\lambda & \\
+	  & A^\prime
+	\end{matrix}
+	\right)
+	\left(
+	\begin{matrix}
+	1 & \\
+	 & U^\prime
+	\end{matrix}
+	\right) \\
+	&=
+	\left(\begin{matrix}
+	\lambda &  \\
+	 & D^\prime
+	\end{matrix}\right)
+\end{aligned}
+\end{equation}
+是一个对角矩阵. 说明结论对 $n$ 成立. 根据数学归纳法, 定理成立.
+\end{proof}
+% section 证明 (end)
+\end{document}
